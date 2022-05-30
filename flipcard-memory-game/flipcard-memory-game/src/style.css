@@ -20,7 +20,7 @@ a{text-decoration:none;color:#fff;display:block;font:bold 18px/75px 'Open Sans';
 a:hover{color:#fff;background:rgba(255, 255, 255, .1)}
 
 /* FRONT SCREEN */
-.logo{width:450px;height:450px;position:absolute;top:50%;left:50%;margin:-225px 0 0 -225px}
+.logo{width:550px;height:550px;position:absolute;top:50%;left:50%;margin:-225px 0 0 -225px}
 .logo .card{width:50%;height:50%;cursor:default;position:relative}
 .logo .card.left.active{z-index:2}
 .logo .card.left.active + .card{opacity:0}
