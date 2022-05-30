@@ -1,13 +1,12 @@
-
 <div>
-    <img src="me.png" style="display: none;" id="scream"/>
-    <img src="cloud.png" style="display: none;" id="cloud"/>
-    <img src="restart.png" style="display: none;" id="restart"/>
+    <img src="mario-49305.png" style="display: none;font-size: larger;" id="scream" />
+    <img src="cloud.png" style="display: none;" id="cloud" />
+    <img src="restart.png" style="display: none;" id="restart" />
 </div>
-<div><input type='button' value="play again" onclick="playAgain()"/></div>
-<!-- <h3 style="text-align: center;">Save Me</h3> -->
-<div id="container" style="text-align: center;padding-top:25px;">
-    <canvas id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3;background: url(bac.jpg);" onclick="playAgain()">
+<div><input type='button' value="play again" onclick="playAgain()" /></div>
+<div id="container" style="text-align: center;padding-top:25px;position: relative; display:block;">
+    <canvas id="gameCanvas" width="800" height="500" style="border:1px solid #d3d3d3;background: url(layers.svg);"
+        onclick="playAgain()">
         Your browser does not support the HTML5 canvas tag.</canvas>
 </div>
 <audio style="display: none;" autoplay="autoplay">
@@ -15,11 +14,11 @@
     <source src="3D_Worldrunner_Main.mid" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
-<div style="text-align: center;"><input type="button" value="FullScreen" onclick="fullScreen()"/></div>
+<div style="text-align: center;"><input type="button" value="FullScreen" onclick="fullScreen()" /></div>
 <script>
     startTime = 0;
     var elem = document.getElementById("gameCanvas");
-    elem.addEventListener('webkitfullscreenchange', function(e) {
+    elem.addEventListener('webkitfullscreenchange', function (e) {
         config.isFullScreen = (!config.isFullScreen);
         if (config.isFullScreen) {
             var elem = document.getElementById("gameCanvas");
@@ -27,17 +26,17 @@
             elem.setAttribute("height", screen.height);
             container.width = screen.width;
             container.height = screen.height;
-            config.font="30px arial";
+            config.font = "45px arial";
         } else {
             var elem = document.getElementById("gameCanvas");
             elem.setAttribute("width", 800);
             elem.setAttribute("height", 500);
             container.width = 800;
             container.height = 500;
-             config.font="25px arial";
+            config.font = "25px arial";
         }
     }, false);
-    var config = {isFullScreen: false,font:"25px arial",fontColor:"rgba(0,0,0,0.9)"};
+    var config = { isFullScreen: false, font: "25px arial", fontColor: "rgba(0,0,0,0.9)" };
     function fullScreen() {
         var elem = document.getElementById("gameCanvas");
         //config.isFullScreen = true;
@@ -45,6 +44,8 @@
         elem.setAttribute("height", screen.height);
         container.width = screen.width;
         container.height = screen.height;
+        // set fontsize to 65px
+        config.font = "45px arial";
         ctx.fillText("Click Here To Start Game", container.width / 2 - 5 * 25, container.height / 2);
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -64,9 +65,9 @@
         $("#gameCanvas").attr("onclick", "");
     }
 
-    var container = {id: "container", width: 800, height: 500};
-    var player = {id: "player", x: container.width / 2, y: container.height - 50, width: 50, height: 80, speedX: 20, speedY: 5};
-    var cloud = {id: "cloud", x: -150, y: 50, width: 150, height: 100, speedX: 3, speedY: 5};
+    var container = { id: "container", width: 800, height: 500 };
+    var player = { id: "player", x: container.width / 2, y: container.height - 50, width: 50, height: 80, speedX: 20, speedY: 5 };
+    var cloud = { id: "cloud", x: -150, y: 50, width: 150, height: 100, speedX: 3, speedY: 5 };
     var objects;
     function init() {
         objects = [
@@ -87,12 +88,13 @@
             if (xPosition <= 2 * xRadius || xPosition + 2 * xRadius >= container.width) {
                 xPosition = container.width / 2;
             }
-            objects.push({id: "#circle", radius: xRadius, speedX: xSpeed, speedY: ySpeed, color: color, centerX: xPosition, centerY: 80});
+            objects.push({ id: "#circle", radius: xRadius, speedX: xSpeed, speedY: ySpeed, color: color, centerX: xPosition, centerY: 80 });
         }
     }
     var c = document.getElementById("gameCanvas");
     var ctx = c.getContext("2d");
     ctx.font = config.font;
+    ctx.fillStyle = "#ffcdb2";
     ctx.fillText("Click Here To Start Game", container.width / 2 - 5 * 25, container.height / 2);
     window.addEventListener("keydown", gamekeyboardlistener);
     document.getElementById("gameCanvas").addEventListener("mousemove", gamemousemove);
@@ -101,8 +103,7 @@
     function gamemousemove() {
         if (currentLoopCountOffset == mouseOffset) {
             currentLoopCountOffset = 0;
-            if (config.isFullScreen) 
-            {
+            if (config.isFullScreen) {
                 if (event.pageX - this.offsetLeft > player.width / 2 && event.pageX - this.offsetLeft <= container.width - player.width / 2) {
                     player.x = event.pageX - player.width / 2;
                 }
@@ -113,7 +114,7 @@
                 if (event.pageX - this.offsetLeft > player.width / 2 && event.pageX - this.offsetLeft <= container.width - player.width / 2) {
                     player.x = event.pageX - player.width / 2 - this.offsetLeft;
                 }
-                if (event.pageY - this.offsetTop > player.height / 2  && event.pageY - this.offsetTop <= container.height - player.height / 2) {
+                if (event.pageY - this.offsetTop > player.height / 2 && event.pageY - this.offsetTop <= container.height - player.height / 2) {
                     player.y = event.pageY - player.height / 2 - this.offsetTop;
                 }
             }
@@ -153,25 +154,25 @@
             object = objects[i];
             //put collision detection
             if (
-                    (object.centerY + object.radius * 0.75 >= player.y && object.centerY + object.radius * 0.75 <= player.y + player.height)
-                    ||
-                    (object.centerY - object.radius * 0.75 >= player.y && object.centerY - object.radius * 0.75 <= player.y + player.height)
-                    ) {
+                (object.centerY + object.radius * 0.75 >= player.y && object.centerY + object.radius * 0.75 <= player.y + player.height)
+                ||
+                (object.centerY - object.radius * 0.75 >= player.y && object.centerY - object.radius * 0.75 <= player.y + player.height)
+            ) {
                 if (
-                        (object.centerX + object.radius * 0.75 > player.x && object.centerX + object.radius * 0.75 < player.x + player.width)
-                        ||
-                        (object.centerX - object.radius * 0.75 > player.x && object.centerX - object.radius * 0.75 < player.x + player.width)
+                    (object.centerX + object.radius * 0.75 > player.x && object.centerX + object.radius * 0.75 < player.x + player.width)
+                    ||
+                    (object.centerX - object.radius * 0.75 > player.x && object.centerX - object.radius * 0.75 < player.x + player.width)
 
-                        ) {
+                ) {
                     score = Math.ceil((new Date() - startTime) / 1000);
                     if (score < 0)
                         score *= -1;
-                    ctx.fillStyle = config.fontColor;
+                    ctx.fillStyle = "#ffcdb2";
                     ctx.fillText("Game Over", container.width / 2 - 3 * 25, container.height / 2);
                     ctx.fillText("Score : " + score + " seconds", container.width / 2 - 4 * 25, container.height / 2 + 35);
-                    var imgRestart= document.getElementById("restart");
-                    var restart = {x:container.width *0.5-50,y:container.height*0.75-50,width:100,height:100};
-                    ctx.drawImage(imgRestart, restart.x,  restart.y, restart.width, restart.height);
+                    var imgRestart = document.getElementById("restart");
+                    var restart = { x: container.width * 0.5 - 50, y: container.height * 0.75 - 50, width: 100, height: 100 };
+                    ctx.drawImage(imgRestart, restart.x, restart.y, restart.width, restart.height);
                     clearInterval(gameLoop);
                     clearInterval(enemyIncrementLoop);
                     $("#gameCanvas").attr("onclick", "playAgain()");
@@ -184,7 +185,7 @@
                 object.speedY *= -1;
             }
             ctx.beginPath();
-            ctx.fillStyle = object.color;
+            ctx.fillStyle = "#ffcdb2";
             ctx.arc(object.centerX, object.centerY, object.radius, 0, 2 * Math.PI);
             ctx.fill();
             object.centerX += object.speedX;
@@ -199,8 +200,8 @@
             cloud.x = (cloud.width * -1) - 20;
         }
         ctx.font = config.font;
-        ctx.fillStyle = config.fontColor;
-        ctx.fillText("Sec : " + (new Date()-startTime) + "", container.width *0.8, 40);
+        ctx.fillStyle = "#ffcdb2";
+        ctx.fillText("Sec : " + (new Date() - startTime) + "", container.width * 0.8, 40);
         // ctx.rect(player.x - 1, player.y - 1, player.width + 2, player.height + 2);
         // ctx.stroke();
     }
